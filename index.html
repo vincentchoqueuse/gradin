@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GradIn - Professional outcome-based grading for teachers. Track student progress with standards-based assessment.">
+    <title>GradIn - Outcome-Based Grading for Teachers</title>
+    <style>
+        :root {
+            --indigo: #5856D6;
+            --indigo-dark: #4341C7;
+            --indigo-light: #7674E8;
+            --background: #FFFFFF;
+            --text-primary: #000000;
+            --text-secondary: #6B6B6B;
+            --border: #E5E5E5;
+            --green: #34C759;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--background);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* icon styling */
+        .app-icon {
+            position: absolute;
+            left: 10%;
+            width: 120px;              /* scales with screen width */
+            height: auto;            /* keeps aspect ratio */
+            border-radius: 20px;
+            border: 3px solid white;
+            z-index: 10;
+        }
+
+
+        /* Header */
+        header {
+            background: var(--indigo);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        header p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            padding: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            background: var(--indigo);
+            color: white;
+        }
+
+        /* Sections */
+        section {
+            padding: 60px 0;
+        }
+
+        section h2 {
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        section h3 {
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        section p, section li {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+
+        .menu-link{
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3em; /* controls spacing between icon and text */
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Features Grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--indigo);
+        }
+
+        .feature-card h3 {
+            color: var(--indigo);
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
+
+        /* Image Placeholder */
+        .image-placeholder {
+            background: linear-gradient(135deg, var(--indigo-light) 0%, var(--indigo) 100%);
+            border-radius: 12px;
+            padding: 100px 20px;
+            text-align: center;
+            color: white;
+            font-size: 1.2rem;
+            margin: 30px 0;
+            border: 3px dashed rgba(255,255,255,0.5);
+        }
+
+        .screenshots {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        /* How To Steps */
+        .step {
+            background: #F9F9F9;
+            border-left: 4px solid var(--indigo);
+            padding: 20px 30px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        .step-number {
+            display: inline-block;
+            background: var(--indigo);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        /* FAQ */
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--indigo);
+            margin-bottom: 10px;
+        }
+
+        .faq-answer {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            padding-left: 20px;
+        }
+
+        /* Contact */
+        .contact-box {
+            background: var(--indigo);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .contact-box h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .contact-box a {
+            color: white;
+            font-size: 1.3rem;
+            text-decoration: none;
+        }
+
+        .contact-box p{
+            color: white;
+        }
+
+        .contact-box a:hover {
+            opacity: 0.8;
+        }
+
+        .github-icon {
+            height: 1em;
+            vertical-align: middle;
+            fill: currentColor;
+        }
+
+
+        /* Footer */
+        footer {
+            background: #F9F9F9;
+            text-align: center;
+            padding: 30px 0;
+            color: var(--text-secondary);
+            margin-top: 60px;
+        }
+
+        .app-store-badge {
+            display: inline-block;
+            margin: 20px 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            header p {
+                font-size: 1.1rem;
+            }
+
+            section h2 {
+                font-size: 2rem;
+            }
+
+            nav a {
+                padding: 8px 15px;
+                margin: 5px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Accent elements */
+        .highlight {
+            color: var(--indigo);
+            font-weight: 600;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        a{
+            text-decoration: none;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <img src="./img/icon.png" alt="GradIn App Icon" class="app-icon">
+            <h1>GradIn <span style="font-size:1rem;">[ɡʁa.dɛ̃]</span></h1>
+            <p>Outcome-based grading</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#overview" class="menu-link">Overview</a></li>
+            <li><a href="#features" class="menu-link">Features</a></li>
+            <li><a href="#how-to-use" class="menu-link">How to Use</a></li>
+            <li><a href="#faq" class="menu-link">FAQ</a></li>
+            <li><a href="#contact" class="menu-link">Contact</a></li>
+            <li><a href="privacy.html" class="menu-link">Privacy Policy</a></li>
+            <li>
+                <a href=" https://github.com/vincentchoqueuse/gradin" target="_blank" rel="noopener" class="menu-link">
+                    <svg class="github-icon" viewBox="0 0 16 16">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52 0-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.01.08-2.1 0 0 .67-.21 2.2.82a7.5 7.5 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.09.16 1.9.08 2.1.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.19 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                    </svg>
+                    GitHub
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Overview Section -->
+    <section id="overview">
+        <div class="container">
+           
+            <h2>Transform Your Grading Workflow</h2>
+            <p style="text-align: center; font-size: 1.2rem; max-width: 800px; margin: 0 auto 40px;">
+                In a world where AI can generate perfect essays and instant answers, meaningful evaluation depends on human insight.
+GradIn gives teachers a new way to assess learning — through outcomes, criteria, and evidence that reveal authentic progress.
+Move beyond grades. Measure growth. Keep the conversation at the heart of learning.
+            </p>
+
+            <!-- App Screenshots Placeholder -->
+            <div class="screenshots">
+                <img src="img/ipad1.png" alt="Course List" style="width: 100%;border: 2px solid var(--border); border-radius: 12px;">
+                <img src="img/ipad3.png" alt="Course List" style="width: 100%;border: 2px solid var(--border); border-radius: 12px;">
+                <img src="img/ipad9.png" alt="Course List" style="width: 100%;border: 2px solid var(--border); border-radius: 12px;">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" style="background: #F9F9F9;">
+        <div class="container">
+            <h2>Key Features</h2>
+
+            <div class="features">
+                <div class="feature-card">
+                    <h3>Quick Assessment</h3>
+                    <p>Assess multiple criteria simultaneously with visual grading and percentage display. Add detailed comments and track assessment history over time.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>Outcome Validation</h3>
+                    <p>Define learning outcomes with custom criteria. Set validation thresholds (0-100%) and track automatic validation per student with visual indicators.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>Student Progress</h3>
+                    <p>Individual student profiles with photos, comprehensive assessment history, and progress visualization per outcome.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>Analytics Dashboard</h3>
+                    <p>View Min/Max/Mean statistics per criterion, class-wide performance overview, and color-coded progress indicators.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>Data Management</h3>
+                    <p>Import students via CSV for bulk upload. Export grades to CSV for reports. Full control over your data with optional iCloud sync.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>Privacy First</h3>
+                    <p>All data stays on your device and your personal iCloud (if enabled). We never access, collect, or share your student data.</p>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+    <!-- How to Use Section -->
+    <section id="how-to-use">
+        <div class="container">
+            <h2>How to Use GradIn</h2>
+
+            <img src="img/ipad10.png" alt="Course List" style="width: 100%;border: 2px solid var(--border); border-radius: 12px;">
+
+            <h3>Getting Started</h3>
+
+            <div class="step">
+                <span class="step-number">1</span>
+                <strong>Create Your First Course</strong>
+                <p>Tap the "+" button on the main screen to create a new course. Enter the course name, level, and start date.</p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <strong>Define Learning Outcomes</strong>
+                <p>Navigate to the Outcomes tab and tap "+" to create outcomes. Each outcome can have multiple criteria for assessment. Set a validation threshold (e.g., 75%) to determine when students have mastered the outcome.</p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <strong>Add Students</strong>
+                <p>In the Students tab, tap "+" to add students individually, or use "Bulk Import" to import multiple students from a CSV file. You can optionally add student photos for easy identification.</p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">4</span>
+                <strong>Perform Quick Assessments</strong>
+                <p>Select a student, then tap "Quick Assessment". Choose an outcome and grade multiple criteria at once. Each grade level has a corresponding percentage (e.g., Satisfactory = 75%, Good = 100%).</p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">5</span>
+                <strong>Track Progress</strong>
+                <p>View individual student progress in their detail page. Green checkmarks indicate validated outcomes, while red X's show outcomes not yet achieved. The Dashboard tab provides class-wide analytics.</p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">6</span>
+                <strong>Export Data</strong>
+                <p>Export your grades to CSV format for reports or external grade books. The export includes validation status and best assessment percentages for each criterion.</p>
+            </div>
+
+            <!-- Feature Image Placeholder -->
+            <div class="screenshots">
+                <img src="img/iphone1.png" alt="Course List" style="width: 100%;border: 2px solid var(--border); border-radius: 12px;">
+                <img src="img/iphone3.png" alt="Course List" style="width: 100%;border: 2px solid var(--border); border-radius: 12px;">
+                <img src="img/iphone8.png" alt="Course List" style="width: 100%;border: 2px solid var(--border); border-radius: 12px;">
+            </div>
+
+
+            <h3>Pro Tips</h3>
+            <ul>
+                <li><strong>iCloud Sync:</strong> Enable in Settings to sync data across your iPhone and iPad</li>
+                <li><strong>CSV Import Format:</strong> First Name, Last Name, Email, ID, Group (optional)</li>
+                <li><strong>Assessment History:</strong> Toggle "Show Assessment Details" in student view to see all historical assessments</li>
+                <li><strong>Color Coding:</strong> Green = validated outcome, Red = not validated, Gray = incomplete assessment</li>
+                <li><strong>Bulk Operations:</strong> Use Quick Assessment to efficiently grade multiple criteria for a student at once</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" style="background: #F9F9F9;">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">What is outcome-based grading?</div>
+                <div class="faq-answer">
+                    Outcome-based grading focuses on measuring student achievement against specific learning outcomes rather than averaging scores. Each outcome has defined criteria, and students are assessed multiple times until they demonstrate mastery.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">How is the outcome validation calculated?</div>
+                <div class="faq-answer">
+                    For each outcome, GradIn takes the best assessment for each criterion and calculates the average percentage. If this average meets or exceeds the outcome's threshold (e.g., 75%), the outcome is validated. All criteria must be assessed at least once for validation.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Can I assess students multiple times?</div>
+                <div class="faq-answer">
+                    Yes! GradIn is designed for reassessment. You can assess students as many times as needed. The system automatically tracks the best grade for each criterion, supporting a growth mindset approach to learning.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">What are the grading levels?</div>
+                <div class="faq-answer">
+                    GradIn uses six levels: Unacceptable (0%), Very Poor (25%), Poor (50%), Satisfactory (75%), Good (100%), and Exceeds Expectations (125%). These percentages are used to calculate outcome averages and validation status.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Is my student data secure?</div>
+                <div class="faq-answer">
+                    Yes! All data is stored locally on your device. If you enable iCloud sync, data is stored in your personal iCloud account using Apple's encryption. GradIn never sends data to external servers, and we have no access to your information.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">How do I import students from a CSV file?</div>
+                <div class="faq-answer">
+                    In the Students tab, tap the menu (•••) and select "Bulk Import Students". Your CSV should have columns in this order: First Name, Last Name, Email, School ID, Group (optional). The file must be under 10MB. You can optionally skip the first row if it contains headers.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Can I use GradIn on both iPhone and iPad?</div>
+                <div class="faq-answer">
+                    Yes! GradIn is a universal app that works on both iPhone and iPad. The iPad version features a split-view interface for efficient navigation. Enable iCloud sync to keep your data synchronized across all devices.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">What iOS version do I need?</div>
+                <div class="faq-answer">
+                    GradIn requires iOS 18.1 or later. This ensures you have access to the latest SwiftData features and performance improvements.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">How do I export my grades?</div>
+                <div class="faq-answer">
+                    In the course detail view, tap the menu (•••) and select "Export to CSV". The export includes student information, validation status per outcome, and best assessment percentages for each criterion. You can open the file in Numbers, Excel, or Google Sheets.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Can I customize the validation thresholds?</div>
+                <div class="faq-answer">
+                    Yes! When creating or editing an outcome, you can set a custom threshold from 0-100%. For example, you might set 80% for advanced outcomes or 60% for introductory concepts.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">What happens if I delete the app?</div>
+                <div class="faq-answer">
+                    If you delete the app, all local data is permanently deleted. If you had iCloud sync enabled, your data remains in iCloud and will be restored when you reinstall the app and sign in with the same Apple ID.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Is GradIn FERPA compliant?</div>
+                <div class="faq-answer">
+                    Yes! Since all data is stored locally on your device or your personal iCloud account, and we never access or collect student information, GradIn complies with FERPA requirements for protecting student educational records.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2>Get in Touch</h2>
+
+            <div class="contact-box">
+                <h3>Need New Functionalities or Report an Issue</h3>
+                <p style="margin: 20px 0;">We're here to help you make the most of GradIn.</p>
+                <p>
+                    <strong>Github Issue:</strong><br>
+                    <a href="https://github.com/vincentchoqueuse/gradin/issues">https://github.com/vincentchoqueuse/gradin/issues</a>
+                </p>
+            </div>
+
+            <p style="text-align: center; margin-top: 40px; color: var(--text-secondary);">
+                <strong>Perfect for:</strong><br>
+                K-12 teachers • University instructors • Training coordinators • Any educator using standards-based or outcome-based grading
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="app-store-badge">
+                <!-- App Store Badge Placeholder -->
+                <img src="img/icon.png" style="width: 120px; border-radius: 20px; border: 3px solid white;">
+
+            <p>&copy; 2025 GradIn. All rights reserved.</p>
+            <p style="margin-top: 10px;">
+                <a href="privacy.html" style="color: var(--indigo); text-decoration: none;">Privacy Policy</a> |
+                <a href="#contact" style="color: var(--indigo); text-decoration: none;">Contact</a>
+                <a href="https://github.com/vincentchoqueuse/gradin" target="_blank">GitHub</a> |
+                <a href="https://github.com/vincentchoqueuse/gradin/issues" target="_blank">Report an Issue</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
