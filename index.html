@@ -310,6 +310,51 @@
             text-decoration: none;
         }
 
+        /* Mobile Optimization for iPhone */
+        @media (max-width: 600px) {
+            /* Hide the app icon */
+            .app-icon {
+                display: none;
+            }
+
+            /* Simplify the header */
+            header {
+                padding: 30px 10px; /* smaller padding */
+            }
+
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            header p {
+                font-size: 1rem;
+            }
+
+            /* Hide or minimize the top bar */
+            nav {
+                display: none;
+            }
+
+            /* Add top spacing so sections aren't glued to top */
+            section:first-of-type {
+                padding-top: 40px;
+            }
+
+            /* Reduce padding for smaller screens */
+            section {
+                padding: 40px 0;
+            }
+
+            /* Smaller text overall for compact view */
+            section h2 {
+                font-size: 1.6rem;
+            }
+
+            section p {
+                font-size: 1rem;
+            }
+        }
+
     </style>
 </head>
 <body>
