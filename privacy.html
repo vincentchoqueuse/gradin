@@ -21,6 +21,13 @@
             box-sizing: border-box;
         }
 
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            overflow-x: hidden; /* empêche tout décalage horizontal */
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             line-height: 1.8;
@@ -198,6 +205,24 @@
             <li>You control where the file is saved and who has access to it</li>
             <li>No data is transmitted to us or any third party during export</li>
         </ul>
+
+        <h2>QR Code Data Sharing</h2>
+        <p>
+            Gradin includes an optional feature that allows teachers to share student progress or assessment summaries
+            via a QR code. This QR code encodes a pre-formatted email containing the selected information.
+        </p>
+
+        <ul>
+            <li>The QR code is generated locally on the teacher’s device — no data is uploaded or transmitted externally.</li>
+            <li>When a student scans the QR code, their device opens their default mail app with a pre-filled message containing the information.</li>
+            <li>The student can review, edit, or delete the message before sending it — <strong>no email is sent automatically.</strong></li>
+            <li>This mechanism ensures full user control and transparency over what data is shared and when.</li>
+        </ul>
+
+        <p>
+            This design follows the principle of <strong>privacy by design</strong> — all data sharing is voluntary, explicit, and initiated by the user.
+            No data is collected, stored, or transmitted by Gradin or any third-party service.
+        </p>
 
         <h2>Data Imports</h2>
         <p>
