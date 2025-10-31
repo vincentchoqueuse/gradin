@@ -1,0 +1,99 @@
+{
+  "outcomes": [
+    {
+      "name": "Understand the fundamentals of signals and systems",
+      "description": "Students will be able to describe and analyze basic properties of continuous and discrete-time signals and systems.",
+      "threshold": 50,
+      "criteria": [
+        {
+          "name": "Signal classification",
+          "description": "Can distinguish between continuous-time and discrete-time signals, and identify deterministic vs. random signals."
+        },
+        {
+          "name": "System properties",
+          "description": "Understands linearity, time-invariance, causality, and stability in systems."
+        },
+        {
+          "name": "Basic transformations",
+          "description": "Applies basic operations such as time-shifting, scaling, and reversal to signals."
+        }
+      ]
+    },
+    {
+      "name": "Analyze signals in the frequency domain",
+      "description": "Students will be able to represent signals using Fourier series and Fourier transforms and interpret their spectra.",
+      "threshold": 50,
+      "criteria": [
+        {
+          "name": "Fourier series understanding",
+          "description": "Can compute and interpret the Fourier series coefficients for periodic signals."
+        },
+        {
+          "name": "Fourier transform application",
+          "description": "Can compute the Fourier transform for standard signals and understand magnitude and phase spectra."
+        },
+        {
+          "name": "Spectral interpretation",
+          "description": "Can relate signal characteristics to their spectral representation (e.g., bandwidth, harmonics)."
+        }
+      ]
+    },
+    {
+      "name": "Understand sampling and reconstruction",
+      "description": "Students will understand the principles of signal sampling, aliasing, and reconstruction of continuous signals from discrete samples.",
+      "threshold": 50,
+      "criteria": [
+        {
+          "name": "Sampling theorem",
+          "description": "Understands the Nyquist-Shannon sampling theorem and its implications."
+        },
+        {
+          "name": "Aliasing recognition",
+          "description": "Can identify aliasing effects in undersampled signals."
+        },
+        {
+          "name": "Signal reconstruction",
+          "description": "Understands ideal and practical reconstruction filters."
+        }
+      ]
+    },
+    {
+      "name": "Apply digital signal processing techniques",
+      "description": "Students will apply discrete-time system analysis and filtering techniques in the digital domain.",
+      "threshold": 50,
+      "criteria": [
+        {
+          "name": "Z-transform usage",
+          "description": "Can derive and use Z-transforms to analyze discrete-time systems."
+        },
+        {
+          "name": "Filter design",
+          "description": "Can design and implement basic FIR and IIR filters."
+        },
+        {
+          "name": "Frequency response analysis",
+          "description": "Can compute and interpret the frequency response of discrete-time systems."
+        }
+      ]
+    },
+    {
+      "name": "Use computational tools for signal processing",
+      "description": "Students will use MATLAB or Python to simulate and analyze signals and systems.",
+      "threshold": 50,
+      "criteria": [
+        {
+          "name": "Signal visualization",
+          "description": "Can generate and plot time-domain and frequency-domain representations of signals."
+        },
+        {
+          "name": "Simulation accuracy",
+          "description": "Validates computational results against theoretical predictions."
+        },
+        {
+          "name": "Code organization",
+          "description": "Writes clean and modular code to implement DSP algorithms."
+        }
+      ]
+    }
+  ]
+}
