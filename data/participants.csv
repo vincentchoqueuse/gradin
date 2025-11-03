@@ -1,0 +1,11 @@
+lastName,firstName,email,schoolID,group
+Fourier,Marie,marie@example.com,SP001,A
+Laplace,Alan,alan@school.edu,SP002,A
+Hilbert,Isaac,isaac@school.edu,SP003,B
+Euler,Ada,ada@school.edu,SP004,B
+Gauss,Niels,niels@school.edu,SP005,B
+Nyquist,Grace,grace@school.edu,SP006,C
+Hamming,Claude,claude@school.edu,SP007,C
+Dirichlet,Lise,lise@school.edu,SP008,C
+Shannon,Benoit,benoit@school.edu,SP009,D
+Hartley,Sophie,sophie@school.edu,SP010,D
