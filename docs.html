@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gradin Documentation - Data Format Specifications">
+    <title>Documentation - Gradin</title>
+    <style>
+        :root {
+            --indigo: #5856D6;
+            --indigo-dark: #4341C7;
+            --background: #FFFFFF;
+            --text-primary: #000000;
+            --text-secondary: #6B6B6B;
+            --border: #E5E5E5;
+            --code-bg: #F5F5F5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.8;
+            color: var(--text-primary);
+            background: var(--background);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            background: var(--indigo);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: var(--indigo);
+            text-decoration: none;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        h2 {
+            color: var(--indigo);
+            font-size: 1.8rem;
+            margin-top: 40px;
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        h4 {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+
+        ul {
+            padding-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        .highlight-box {
+            background: #F0F0FF;
+            border-left: 4px solid var(--indigo);
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+
+        .highlight-box strong {
+            color: var(--indigo);
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            margin: 0;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--text-primary);
+        }
+
+        .code-block code {
+            font-family: inherit;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95rem;
+        }
+
+        table th {
+            background: var(--indigo);
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        table tr:last-child td {
+            border-bottom: none;
+        }
+
+        table tbody tr:hover {
+            background: #F9F9F9;
+        }
+
+        .note {
+            background: #FFF9E6;
+            border-left: 4px solid #FFA500;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .note strong {
+            color: #CC8400;
+        }
+
+        .last-updated {
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-bottom: 30px;
+        }
+
+        footer {
+            background: #F9F9F9;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 60px;
+        }
+
+        footer a {
+            color: var(--indigo);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Documentation</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to Home</a>
+
+        <p class="last-updated">Last Updated: October 27, 2025</p>
+
+        <div class="highlight-box">
+            <strong>Data Format Specifications:</strong> This guide describes the file formats required for importing student data and course outcomes into Gradin. All imports are processed locally on your device.
+        </div>
+
+        <h2>Student Import - CSV Format</h2>
+        <p>
+            Gradin allows you to import student rosters in bulk using CSV (Comma-Separated Values) files. This is useful for quickly populating a course with students at the start of a semester.
+        </p>
+
+        <h3>CSV File Structure</h3>
+        <p>
+            The CSV file can optionally include a header row, but it is <strong>not used by the application</strong>. The columns must be in the exact order shown below, regardless of whether a header row is present:
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Order</th>
+                    <th>Column Name</th>
+                    <th>Required</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td><code>lastName</code></td>
+                    <td>Yes</td>
+                    <td>Student's last name</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td><code>firstName</code></td>
+                    <td>Yes</td>
+                    <td>Student's first name</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td><code>email</code></td>
+                    <td>Yes</td>
+                    <td>Student's email address</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td><code>schoolID</code></td>
+                    <td>Yes</td>
+                    <td>Student's unique identifier or registration number</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td><code>group</code></td>
+                    <td>No</td>
+                    <td>Optional group assignment (e.g., section, cohort)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Example CSV Files</h3>
+
+        <h4>Option 1: With Header Row (Optional)</h4>
+        <p>
+            You can include a header row for readability, but it will be ignored by the application:
+        </p>
+
+        <div class="code-block">
+<pre><code>lastName,firstName,email,schoolID,group
+Fourier,Marie,marie@example.com,SP001,A
+Laplace,Alan,alan@school.edu,SP002,A
+Hilbert,Isaac,isaac@school.edu,SP003,B
+Euler,Ada,ada@school.edu,SP004,B
+Gauss,Niels,niels@school.edu,SP005,B
+Nyquist,Grace,grace@school.edu,SP006,C
+Hamming,Claude,claude@school.edu,SP007,C
+Dirichlet,Lise,lise@school.edu,SP008,C
+Shannon,Benoit,benoit@school.edu,SP009,D
+Hartley,Sophie,sophie@school.edu,SP010,D</code></pre>
+        </div>
+
+        <h4>Option 2: Without Header Row</h4>
+        <p>
+            You can omit the header row entirely. The column order must still be exact:
+        </p>
+
+        <div class="code-block">
+<pre><code>Fourier,Marie,marie@example.com,SP001,A
+Laplace,Alan,alan@school.edu,SP002,A
+Hilbert,Isaac,isaac@school.edu,SP003,B
+Euler,Ada,ada@school.edu,SP004,B
+Gauss,Niels,niels@school.edu,SP005,B
+Nyquist,Grace,grace@school.edu,SP006,C
+Hamming,Claude,claude@school.edu,SP007,C
+Dirichlet,Lise,lise@school.edu,SP008,C
+Shannon,Benoit,benoit@school.edu,SP009,D
+Hartley,Sophie,sophie@school.edu,SP010,D</code></pre>
+        </div>
+
+        <div class="note">
+            <strong>Important:</strong> The column order <strong>must always be</strong>: lastName, firstName, email, schoolID, group. This order is mandatory regardless of whether you include a header row. The header row is optional and ignored by the application - only the column position matters. 
+        </div>
+
+        <h3>How to Import</h3>
+        <ol>
+            <li>Prepare your CSV file with the correct format</li>
+            <li>In Gradin, navigate to the course where you want to import students</li>
+            <li>Tap the import button and select your CSV file</li>
+            <li>Review the preview and confirm the import</li>
+        </ol>
+
+        <h2>Course Outcomes - JSON Format</h2>
+        <p>
+            Gradin supports importing pre-defined learning outcomes using JSON (JavaScript Object Notation) format. This allows you to quickly set up assessment frameworks for your courses.
+        </p>
+
+        <h3>JSON File Structure</h3>
+        <p>
+            The JSON file must contain a root object with an <code>outcomes</code> array. Each outcome includes:
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>name</code></td>
+                    <td>String</td>
+                    <td>Short title of the learning outcome</td>
+                </tr>
+                <tr>
+                    <td><code>description</code></td>
+                    <td>String</td>
+                    <td>Detailed explanation of what students will achieve</td>
+                </tr>
+                <tr>
+                    <td><code>threshold</code></td>
+                    <td>Number</td>
+                    <td>Minimum percentage (0-100) required to validate mastery</td>
+                </tr>
+                <tr>
+                    <td><code>criteria</code></td>
+                    <td>Array</td>
+                    <td>List of assessment criteria for this outcome</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>Criteria Structure</h4>
+        <p>Each criterion in the <code>criteria</code> array contains:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>name</code></td>
+                    <td>String</td>
+                    <td>Short title of the criterion</td>
+                </tr>
+                <tr>
+                    <td><code>description</code></td>
+                    <td>String</td>
+                    <td>What students should demonstrate when meeting this criterion</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Example JSON File</h3>
+        <p>
+            Here's an example of a Signal Processing course with 5 learning outcomes:
+        </p>
+
+        <div class="code-block">
+<pre><code>{
+  "outcomes": [
+    {
+      "name": "Understand the fundamentals of signals and systems",
+      "description": "Students will be able to describe and analyze basic properties of continuous and discrete-time signals and systems.",
+      "threshold": 50,
+      "criteria": [
+        {
+          "name": "Signal classification",
+          "description": "Can distinguish between continuous-time and discrete-time signals, and identify deterministic vs. random signals."
+        },
+        {
+          "name": "System properties",
+          "description": "Understands linearity, time-invariance, causality, and stability in systems."
+        },
+        {
+          "name": "Basic transformations",
+          "description": "Applies basic operations such as time-shifting, scaling, and reversal to signals."
+        }
+      ]
+    },
+    {
+      "name": "Analyze signals in the frequency domain",
+      "description": "Students will be able to represent signals using Fourier series and Fourier transforms and interpret their spectra.",
+      "threshold": 50,
+      "criteria": [
+        {
+          "name": "Fourier series understanding",
+          "description": "Can compute and interpret the Fourier series coefficients for periodic signals."
+        },
+        {
+          "name": "Fourier transform application",
+          "description": "Can compute the Fourier transform for standard signals and understand magnitude and phase spectra."
+        },
+        {
+          "name": "Spectral interpretation",
+          "description": "Can relate signal characteristics to their spectral representation (e.g., bandwidth, harmonics)."
+        }
+      ]
+    }
+  ]
+}</code></pre>
+        </div>
+
+        <div class="note">
+            <strong>Note:</strong> The example above shows only 2 outcomes for brevity. In practice, you can define as many outcomes and criteria as needed for your course. Each outcome can have multiple criteria (typically 2-5).
+        </div>
+
+        <h3>Best Practices</h3>
+        <ul>
+            <li><strong>Outcome Names:</strong> Keep them concise and action-oriented (e.g., "Analyze signals in the frequency domain")</li>
+            <li><strong>Descriptions:</strong> Clearly state what students will be able to do upon completion</li>
+            <li><strong>Threshold:</strong> Set realistic mastery thresholds (typically 50-70% depending on difficulty)</li>
+            <li><strong>Criteria:</strong> Make criteria specific, measurable, and aligned with the outcome</li>
+            <li><strong>Number of Criteria:</strong> Include 2-5 criteria per outcome for effective assessment</li>
+        </ul>
+
+        <h3>How to Import</h3>
+        <ol>
+            <li>Prepare your JSON file with the correct structure</li>
+            <li>Validate your JSON syntax using a JSON validator</li>
+            <li>In Gradin, create or open a course</li>
+            <li>Navigate to the outcomes section and tap the import button</li>
+            <li>Select your JSON file and confirm the import</li>
+        </ol>
+
+        <h2>Download Sample Files</h2>
+        <p>
+            You can download sample template files to help you get started:
+        </p>
+        <ul>
+            <li><a href="data/participants.csv" style="color: var(--indigo);">Sample Student CSV Template</a></li>
+            <li><a href="data/signal_processing_course.json" style="color: var(--indigo);">Sample Course Outcomes JSON Template</a></li>
+        </ul>
+
+        <h2>Need Help?</h2>
+        <p>
+            If you encounter issues with importing data or have questions about the file formats, please contact us at:
+        </p>
+        <p style="margin-left: 20px;">
+            <strong>Email:</strong> <a href="mailto:vincent.choqueuse@icloud.com" style="color: var(--indigo);">vincent.choqueuse@icloud.com</a>
+        </p>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Gradin. All rights reserved.</p>
+            <p style="margin-top: 10px;">
+                <a href="index.html">Home</a> |
+                <a href="privacy.html">Privacy Policy</a> |
+                <a href="mailto:vincent.choqueuse@icloud.com">Contact</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
