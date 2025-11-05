@@ -55,7 +55,6 @@ pre {
     border-radius: 8px;
     overflow-x: auto;
     margin: 20px 0;
-    border: 1px solid var(--border);
 }
 
 pre code {
