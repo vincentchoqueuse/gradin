@@ -1,0 +1,154 @@
+/* Documentation Page Specific Styles */
+
+/* Content Container Spacing */
+body > .container {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+h2 {
+    color: var(--indigo);
+    font-size: 1.8rem;
+    margin-top: 40px;
+    margin-bottom: 15px;
+}
+
+h3 {
+    color: var(--text-primary);
+    font-size: 1.3rem;
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+h4 {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+p, li {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    margin-bottom: 15px;
+}
+
+ul {
+    padding-left: 30px;
+    margin-bottom: 20px;
+}
+
+/* Code Blocks */
+code {
+    background: var(--code-bg);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    color: #c7254e;
+}
+
+pre {
+    background: var(--code-bg);
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 20px 0;
+    border: 1px solid var(--border);
+}
+
+pre code {
+    background: none;
+    padding: 0;
+    color: var(--text-primary);
+    display: block;
+    white-space: pre;
+}
+
+.code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    overflow-x: auto;
+}
+
+.code-block pre {
+    margin: 0;
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Courier New', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-primary);
+}
+
+.code-block code {
+    font-family: inherit;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+table th {
+    background: var(--indigo);
+    color: white;
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+}
+
+table td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+}
+
+table tr:last-child td {
+    border-bottom: none;
+}
+
+table tbody tr:hover {
+    background: #F9F9F9;
+}
+
+/* Highlight Box */
+.highlight-box {
+    background: #F0F0FF;
+    border-left: 4px solid var(--indigo);
+    padding: 20px;
+    margin: 30px 0;
+    border-radius: 8px;
+}
+
+.highlight-box strong {
+    color: var(--indigo);
+}
+
+/* Note Box */
+.note {
+    background: #FFF9E6;
+    border-left: 4px solid #FFA500;
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 8px;
+}
+
+.note strong {
+    color: #CC8400;
+}
+
+/* Last Updated */
+.last-updated {
+    color: var(--text-secondary);
+    font-style: italic;
+    margin-bottom: 30px;
+}

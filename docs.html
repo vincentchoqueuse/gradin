@@ -5,198 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Gradin Documentation - Data Format Specifications">
     <title>Documentation - Gradin</title>
-    <style>
-        :root {
-            --indigo: #5856D6;
-            --indigo-dark: #4341C7;
-            --background: #FFFFFF;
-            --text-primary: #000000;
-            --text-secondary: #6B6B6B;
-            --border: #E5E5E5;
-            --code-bg: #F5F5F5;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            overflow-x: hidden;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.8;
-            color: var(--text-primary);
-            background: var(--background);
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        header {
-            background: var(--indigo);
-            color: white;
-            padding: 40px 0;
-            text-align: center;
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-        }
-
-        .back-link {
-            display: inline-block;
-            color: var(--indigo);
-            text-decoration: none;
-            margin-bottom: 30px;
-            font-weight: 500;
-        }
-
-        .back-link:hover {
-            text-decoration: underline;
-        }
-
-        h2 {
-            color: var(--indigo);
-            font-size: 1.8rem;
-            margin-top: 40px;
-            margin-bottom: 15px;
-        }
-
-        h3 {
-            color: var(--text-primary);
-            font-size: 1.3rem;
-            margin-top: 25px;
-            margin-bottom: 10px;
-        }
-
-        h4 {
-            color: var(--text-primary);
-            font-size: 1.1rem;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        p, li {
-            font-size: 1.05rem;
-            color: var(--text-secondary);
-            margin-bottom: 15px;
-        }
-
-        ul {
-            padding-left: 30px;
-            margin-bottom: 20px;
-        }
-
-        .highlight-box {
-            background: #F0F0FF;
-            border-left: 4px solid var(--indigo);
-            padding: 20px;
-            margin: 30px 0;
-            border-radius: 8px;
-        }
-
-        .highlight-box strong {
-            color: var(--indigo);
-        }
-
-        .code-block {
-            background: var(--code-bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-            overflow-x: auto;
-        }
-
-        .code-block pre {
-            margin: 0;
-            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Courier New', monospace;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            color: var(--text-primary);
-        }
-
-        .code-block code {
-            font-family: inherit;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 0.95rem;
-        }
-
-        table th {
-            background: var(--indigo);
-            color: white;
-            padding: 12px;
-            text-align: left;
-            font-weight: 600;
-        }
-
-        table td {
-            padding: 12px;
-            border-bottom: 1px solid var(--border);
-            color: var(--text-secondary);
-        }
-
-        table tr:last-child td {
-            border-bottom: none;
-        }
-
-        table tbody tr:hover {
-            background: #F9F9F9;
-        }
-
-        .note {
-            background: #FFF9E6;
-            border-left: 4px solid #FFA500;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 8px;
-        }
-
-        .note strong {
-            color: #CC8400;
-        }
-
-        .last-updated {
-            color: var(--text-secondary);
-            font-style: italic;
-            margin-bottom: 30px;
-        }
-
-        footer {
-            background: #F9F9F9;
-            text-align: center;
-            padding: 30px 0;
-            margin-top: 60px;
-        }
-
-        footer a {
-            color: var(--indigo);
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/docs.css">
 </head>
 <body>
+    <!-- Top Navigation -->
+    <div class="top-nav">
+        <div class="container">
+            <a href="index.html"><img src="./img/icon.png" alt="GradIn Logo" class="nav-logo"></a>
+            <img src="./img/apple.svg" alt="Download on the App Store" class="nav-app-store">
+        </div>
+    </div>
+
     <header>
         <div class="container">
             <h1>Documentation</h1>
@@ -208,11 +28,153 @@
 
         <p class="last-updated">Last Updated: October 27, 2025</p>
 
+        <h2>Learning Outcome Validation</h2>
+        <p>
+            Understanding how GradIn validates learning outcomes is essential for accurate assessment. The validation process follows a clear, transparent methodology based on criterion-level grading.
+        </p>
+
+        <h3>Grade Levels and Percentages</h3>
+        <p>
+            GradIn uses six grade levels to assess student performance. Each grade level corresponds to a specific percentage used in outcome calculations:
+        </p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Grade Level</th>
+                    <th>Percentage</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Unacceptable</strong></td>
+                    <td>0%</td>
+                    <td>Performance does not meet minimum standards</td>
+                </tr>
+                <tr>
+                    <td><strong>Very Poor</strong></td>
+                    <td>25%</td>
+                    <td>Significant improvement needed</td>
+                </tr>
+                <tr>
+                    <td><strong>Poor</strong></td>
+                    <td>50%</td>
+                    <td>Below expectations, requires work</td>
+                </tr>
+                <tr>
+                    <td><strong>Satisfactory</strong></td>
+                    <td>75%</td>
+                    <td>Meets expectations and learning objectives</td>
+                </tr>
+                <tr>
+                    <td><strong>Good</strong></td>
+                    <td>100%</td>
+                    <td>Exceeds basic expectations</td>
+                </tr>
+                <tr>
+                    <td><strong>Exceeds Expectations</strong></td>
+                    <td>125%</td>
+                    <td>Exceptional performance, mastery demonstrated</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="note">
+            <strong>Note:</strong> The "Exceeds Expectations" grade (125%) allows students to compensate for lower performance in other criteria. For example, an outcome with two criteria graded at 50% and 125% would average to 87.5%, potentially meeting a 75% validation threshold.
+        </div>
+
+        <div class="highlight-box">
+            <strong>Important:</strong> If the best grade on any criterion is 0% (Unacceptable), the outcome is automatically <strong>not validated</strong>, regardless of the average. All criteria must demonstrate at least minimal competency for outcome validation.
+        </div>
+
+        <h3>Validation Logic</h3>
+        <p>
+            GradIn uses a two-step process to calculate and validate learning outcomes:
+        </p>
+
+        <h4>Step 1: Criterion Grade Calculation</h4>
+        <p>
+            For each criterion within an outcome, the <strong>grade is determined by taking the maximum value</strong> of all grades obtained by the student for that specific criterion.
+        </p>
+        <div class="highlight-box">
+            <strong>Example:</strong> If a student has been assessed three times on the same criterion with grades of 50%, 75%, and 100%, the criterion grade will be <strong>100%</strong> (the maximum value).
+        </div>
+        <p>
+            This approach supports a <strong>growth mindset</strong> by recognizing students' improvement over time. Students can demonstrate mastery through multiple assessment opportunities, and only their best performance counts.
+        </p>
+
+        <h4>Step 2: Outcome Grade Calculation</h4>
+        <p>
+            For each learning outcome, the <strong>grade percent is calculated as the simple mean (average) of all criterion grades</strong> associated with that outcome.
+        </p>
+        <div class="code-block">
+<pre><code>Outcome Grade (%) = (Sum of all criterion grades) / (Number of criteria)</code></pre>
+        </div>
+        <div class="highlight-box">
+            <strong>Example:</strong> An outcome has three criteria with final grades of 75%, 100%, and 50%. The outcome grade is calculated as:<br><br>
+            <code>(75 + 100 + 50) / 3 = 75%</code>
+        </div>
+
+        <h4>Step 3: Outcome Validation</h4>
+        <p>
+            An outcome is considered <strong>validated</strong> when:
+        </p>
+        <ul>
+            <li>All criteria have been assessed at least once (no missing data)</li>
+            <li>The calculated outcome grade meets or exceeds the validation threshold set for that outcome (e.g., 75%)</li>
+        </ul>
+        <div class="note">
+            <strong>Note:</strong> Validation thresholds can be customized for each outcome when creating or editing outcomes in GradIn. Common thresholds include 60%, 70%, 75%, or 80% depending on your assessment standards.
+        </div>
+
+
+        <h3>Practical Example</h3>
+        <p>
+            Consider a learning outcome "<em>Master Signal Processing Fundamentals</em>" with a 75% validation threshold and three criteria:
+        </p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Criterion</th>
+                    <th>Assessment 1</th>
+                    <th>Assessment 2</th>
+                    <th>Assessment 3</th>
+                    <th>Final Grade (Max)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Fourier Transform</td>
+                    <td>50%</td>
+                    <td>75%</td>
+                    <td>100%</td>
+                    <td><strong>100%</strong></td>
+                </tr>
+                <tr>
+                    <td>Sampling Theory</td>
+                    <td>75%</td>
+                    <td>75%</td>
+                    <td>-</td>
+                    <td><strong>75%</strong></td>
+                </tr>
+                <tr>
+                    <td>Filter Design</td>
+                    <td>50%</td>
+                    <td>75%</td>
+                    <td>-</td>
+                    <td><strong>75%</strong></td>
+                </tr>
+            </tbody>
+        </table>
+        <p>
+            <strong>Outcome Grade:</strong> (100 + 75 + 75) / 3 = <strong>83.3%</strong><br>
+            <strong>Result:</strong> ✓ <em>Validated</em> (83.3% ≥ 75% threshold)
+        </p>
+
+        <h2>Student Import - CSV Format</h2>
+
         <div class="highlight-box">
             <strong>Data Format Specifications:</strong> This guide describes the file formats required for importing student data and course outcomes into Gradin. All imports are processed locally on your device.
         </div>
-
-        <h2>Student Import - CSV Format</h2>
         <p>
             Gradin allows you to import student rosters in bulk using CSV (Comma-Separated Values) files. This is useful for quickly populating a course with students at the start of a semester.
         </p>
@@ -453,6 +415,8 @@ Hartley,Sophie,sophie@school.edu,SP010,D</code></pre>
             <li>Navigate to the outcomes section and tap the import button</li>
             <li>Select your JSON file and confirm the import</li>
         </ol>
+
+
 
         <h2>Download Sample Files</h2>
         <p>

@@ -1,0 +1,52 @@
+/* Privacy Page Specific Styles */
+
+/* Content Container Spacing */
+body > .container {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+h2 {
+    color: var(--indigo);
+    font-size: 1.8rem;
+    margin-top: 40px;
+    margin-bottom: 15px;
+}
+
+h3 {
+    color: var(--text-primary);
+    font-size: 1.3rem;
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+p, li {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    margin-bottom: 15px;
+}
+
+ul {
+    padding-left: 30px;
+    margin-bottom: 20px;
+}
+
+/* Highlight Box */
+.highlight-box {
+    background: #F0F0FF;
+    border-left: 4px solid var(--indigo);
+    padding: 20px;
+    margin: 30px 0;
+    border-radius: 8px;
+}
+
+.highlight-box strong {
+    color: var(--indigo);
+}
+
+/* Last Updated */
+.last-updated {
+    color: var(--text-secondary);
+    font-style: italic;
+    margin-bottom: 30px;
+}
