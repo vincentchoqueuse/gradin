@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Gradin CSV Formatter - Convert and validate student files" />
+  <title>CSV Formatter - Gradin</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.3/xlsx.full.min.js"></script>
+  <style>
+    :root {
+      --shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      --radius: 8px;
+    }
+    /* Upload box */
+    .upload-box {
+      background: white;
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 40px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow);
+    }
+    .upload-box:hover {
+      border-color: #ccc;
+      background: rgba(0, 0, 0, 0.02);
+    }
+    .upload-box h3 {
+      margin: 0 0 8px;
+      color: var(--text-primary);
+    }
+    .upload-box p {
+      margin: 0;
+      color: var(--text-secondary);
+    }
+    .upload-box span {
+      color: var(--indigo);
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .upload-box svg {
+      color: var(--indigo);
+      margin-bottom: 12px;
+    }
+    /* Mapping section */
+    .mapping-section {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin: 20px 0;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+    }
+    .mapping-section h2 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      background: var(--indigo);
+      color: white;
+      border-radius: 50%;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .section-description {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin: 0 0 20px 36px;
+    }
+    /* Formulaire des options de ligne */
+    .row-options-form {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 24px;
+      padding: 16px;
+      background: rgba(0, 0, 0, 0.02);
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+    .row-options-form .form-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .row-options-form .form-row label {
+      font-weight: 500;
+      color: var(--text-primary);
+      font-size: 0.9rem;
+    }
+    .row-options-form .form-row input[type="number"] {
+      width: 70px;
+      text-align: center;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: white;
+      transition: all 0.2s ease;
+      font-size: 0.95rem;
+    }
+    .row-options-form .form-row input[type="number"]:focus {
+      border-color: var(--indigo);
+      box-shadow: 0 0 0 2px rgba(88, 86, 214, 0.15);
+      outline: none;
+    }
+    /* Mapping des colonnes */
+    .mapping-columns {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .mapping-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .mapping-row label {
+      flex: 0 0 100px;
+      text-align: right;
+      font-weight: 500;
+      color: var(--text-primary);
+      font-size: 0.9rem;
+    }
+    .custom-select {
+      flex: 1;
+      position: relative;
+    }
+    .custom-select select {
+      width: 100%;
+      padding: 10px 36px 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: white;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      transition: all 0.2s ease;
+      font-family: 'Inter', sans-serif;
+    }
+    .custom-select select option {
+      padding: 8px;
+    }
+    .custom-select select:hover {
+      border-color: var(--indigo-light);
+    }
+    .custom-select select:focus {
+      border-color: var(--indigo);
+      box-shadow: 0 0 0 2px rgba(88, 86, 214, 0.15);
+      outline: none;
+      border-width: 1.5px;
+    }
+    .custom-select::after {
+      content: "▼";
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+    }
+    /* Table preview */
+    #preview {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: white;
+    }
+    .table-wrapper {
+      overflow-x: auto;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+    #preview table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    #preview th {
+      background: rgba(0, 0, 0, 0.04);
+      position: sticky;
+      top: 0;
+      padding: 14px 12px;
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-primary);
+      border-bottom: 2px solid var(--border);
+      font-size: 0.9rem;
+      z-index: 1;
+    }
+    #preview td {
+      padding: 12px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      color: var(--text-primary);
+      font-size: 0.9rem;
+    }
+    #preview tbody tr:hover {
+      background: rgba(0, 0, 0, 0.03);
+    }
+    .ellipsis-row td {
+      text-align: center;
+      color: var(--text-secondary);
+      font-style: italic;
+      background: rgba(0, 0, 0, 0.02) !important;
+    }
+    .ellipsis-row:hover td {
+      background: rgba(0, 0, 0, 0.02) !important;
+    }
+    /* Buttons */
+    .btn {
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary {
+      background: var(--indigo);
+      color: white;
+      box-shadow: 0 2px 8px rgba(88, 86, 214, 0.2);
+    }
+    .btn-primary:hover:not(:disabled) {
+      background: var(--indigo-light);
+      box-shadow: 0 4px 12px rgba(88, 86, 214, 0.3);
+    }
+    .btn-secondary {
+      background: white;
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover {
+      background: rgba(0, 0, 0, 0.02);
+      border-color: var(--text-secondary);
+    }
+    .btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    .button-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+      justify-content: flex-end;
+    }
+    /* Spinner */
+    .spinner {
+      display: none;
+      width: 40px;
+      height: 40px;
+      margin: 20px auto;
+      border: 4px solid rgba(0, 0, 0, 0.1);
+      border-radius: 50%;
+      border-top: 4px solid var(--indigo);
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    /* Hidden class */
+    .hidden {
+      display: none !important;
+      opacity: 0;
+      visibility: hidden;
+    }
+    /* Smooth scroll behavior */
+    html {
+      scroll-behavior: smooth;
+    }
+    /* Fade in animation */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .fade-in {
+      animation: fadeIn 0.4s ease-out;
+    }
+    /* Responsive */
+    @media (max-width: 768px) {
+      header {
+        padding: 30px 0;
+      }
+      header h1 {
+        font-size: 1.5rem;
+      }
+      .mapping-section {
+        padding: 20px;
+      }
+      .mapping-columns {
+        grid-template-columns: 1fr;
+      }
+      .mapping-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      .mapping-row label {
+        text-align: left;
+      }
+      .row-options-form {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .button-group {
+        flex-direction: column;
+      }
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      #preview table {
+        font-size: 0.85rem;
+      }
+      #preview th,
+      #preview td {
+        padding: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <div class="top-nav">
+    <div class="container">
+      <a href="index.html"><img src="./img/icon.png" alt="Gradin Logo" class="nav-logo" /></a>
+      <a href="https://apps.apple.com/fr/app/gradin/id6754825654"><img src="./img/apple.svg" alt="Download on the App Store" class="nav-app-store" /></a>
+    </div>
+  </div>
+  <!-- Header -->
+  <header style="min-height: 302px">
+    <div class="container" >
+      <h1>CSV Formatter</h1>
+      <p class="subtitle">Convert and validate your student file for Gradin.</p>
+    </div>
+  </header>
+  <!-- Main content -->
+  <div class="container" style="padding-top: 20px; padding-bottom: 20px;">
+    <a href="index.html" class="back-link">← Back to Home</a>
+    <p style="margin: 16px 0; color: var(--text-secondary);">
+      Convert your student list file to the Gradin format. All processing happens locally — no data leaves your device.
+    </p>
+
+    <!-- Step 1: Upload -->
+    <div class="mapping-section">
+      <h2><span class="step-number">1</span> Upload File</h2>
+      <p class="section-description">Upload your CSV, XLSX, or ODS file</p>
+      <div id="uploadArea">
+        <div class="upload-box" id="dropZone">
+          <div style="text-align:center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
+              <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+              <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z"/>
+            </svg>
+          </div>
+          <h3>Upload your file</h3>
+          <p>Drag and drop a file here or <span>click to browse</span></p>
+          <p style="font-size: 0.85em; margin-top: 4px;">Supported formats: CSV, XLSX, ODS</p>
+          <input type="file" id="fileInput" accept=".csv,.xlsx,.ods" style="display:none;" />
+          <div class="spinner" id="spinner"></div>
+        </div>
+        <div id="fileUploaded" class="hidden" style="text-align: center; padding: 20px;">
+          <p id="uploadedFileName" style="margin: 0; font-weight: 500; color: var(--text-primary);"></p>
+          <button id="newFileBtn" class="btn btn-secondary" style="margin-top: 12px;">Upload New File</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Configure -->
+    <div class="mapping-section hidden" id="mappingSection">
+      <h2><span class="step-number">2</span> Configure Mapping</h2>
+      <p class="section-description">Adjust row settings and map your columns</p>
+
+      <div class="row-options-form">
+        <div class="form-row">
+          <label for="skipRows">Skip rows:</label>
+          <input type="number" id="skipRows" min="0" value="0">
+        </div>
+      </div>
+
+      <div class="mapping-columns" id="mappingRows">
+      </div>
+    </div>
+
+    <!-- Step 3: Preview & Download -->
+    <div class="mapping-section hidden" id="previewSection">
+      <h2><span class="step-number">3</span> Preview & Download</h2>
+      <p class="section-description">Review your formatted data and download</p>
+      <div id="dataSummary" style="padding: 12px; background: rgba(0, 0, 0, 0.03); border-radius: 6px; margin-bottom: 16px; font-size: 0.9rem; color: var(--text-primary);"></div>
+      <div id="preview"></div>
+      <div class="button-group">
+        <button id="downloadBtn" class="btn btn-primary" disabled>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+          </svg>
+          Download CSV
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Gradin. All rights reserved.</p>
+      <p style="margin-top: 10px;">
+        <a href="index.html">Home</a> |
+        <a href="docs.html">Documentation</a> |
+        <a href="privacy.html">Privacy Policy</a> |
+        <a href="mailto:vincent.choqueuse@icloud.com">Contact</a>
+      </p>
+    </div>
+  </footer>
+  <script>
+    let rawData = [];
+    let currentMapping = {};
+    const EXPECTED_COLUMNS = [
+      { id: "lastName", label: "Last Name" },
+      { id: "firstName", label: "First Name" },
+      { id: "email", label: "Email" },
+      { id: "schoolID", label: "School ID" },
+      { id: "group", label: "Group" }
+    ];
+    const dropZone = document.getElementById("dropZone");
+    const fileInput = document.getElementById("fileInput");
+    const spinner = document.getElementById("spinner");
+    const mappingRows = document.getElementById("mappingRows");
+    const previewDiv = document.getElementById("preview");
+    const downloadBtn = document.getElementById("downloadBtn");
+    const skipRowsInput = document.getElementById("skipRows");
+    const mappingSection = document.getElementById("mappingSection");
+    const previewSection = document.getElementById("previewSection");
+    const uploadArea = document.getElementById("uploadArea");
+    const fileUploaded = document.getElementById("fileUploaded");
+    const newFileBtn = document.getElementById("newFileBtn");
+    const dataSummary = document.getElementById("dataSummary");
+    const uploadedFileName = document.getElementById("uploadedFileName");
+    let currentFileName = "";
+
+    // Drag and drop handling
+    dropZone.addEventListener("click", () => fileInput.click());
+    dropZone.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      dropZone.style.borderColor = "#5856D6";
+      dropZone.style.background = "rgba(88, 86, 214, 0.05)";
+    });
+    dropZone.addEventListener("dragleave", () => {
+      dropZone.style.borderColor = "var(--border)";
+      dropZone.style.background = "white";
+    });
+    dropZone.addEventListener("drop", (e) => {
+      e.preventDefault();
+      dropZone.style.borderColor = "var(--border)";
+      dropZone.style.background = "white";
+      const file = e.dataTransfer.files[0];
+      if (file) handleFile(file);
+    });
+    fileInput.addEventListener("change", (e) => {
+      if (e.target.files.length) handleFile(e.target.files[0]);
+    });
+
+    // New file button
+    newFileBtn.addEventListener("click", () => {
+      rawData = [];
+      currentMapping = {};
+      fileInput.value = "";
+      dropZone.classList.remove("hidden");
+      fileUploaded.classList.add("hidden");
+      mappingSection.classList.add("hidden");
+      previewSection.classList.add("hidden");
+      downloadBtn.disabled = true;
+    });
+
+    // File processing
+    function handleFile(file) {
+      currentFileName = file.name;
+      spinner.style.display = "block";
+      const ext = file.name.split(".").pop().toLowerCase();
+      const reader = new FileReader();
+      if (ext === "csv") {
+        Papa.parse(file, {
+          complete: (res) => {
+            processData(res.data);
+            spinner.style.display = "none";
+          },
+          error: (err) => {
+            alert("Error reading CSV file.");
+            spinner.style.display = "none";
+          }
+        });
+      } else if (["xlsx", "ods"].includes(ext)) {
+        reader.onload = (evt) => {
+          try {
+            const workbook = XLSX.read(evt.target.result, { type: "binary" });
+            const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+            const data = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
+            processData(data);
+            spinner.style.display = "none";
+          } catch (e) {
+            alert("Error reading Excel/ODS file.");
+            spinner.style.display = "none";
+          }
+        };
+        reader.readAsBinaryString(file);
+      } else {
+        alert("Unsupported file format. Please upload a CSV, XLSX, or ODS file.");
+        spinner.style.display = "none";
+      }
+    }
+
+    // Data processing
+    function processData(rows) {
+      rawData = rows.filter(r => r.some(v => v !== null && v !== ""));
+      const colCount = Math.max(...rawData.map(r => r.length));
+      EXPECTED_COLUMNS.forEach((col, index) => {
+        currentMapping[col.id] = index < colCount ? index : null;
+      });
+      // Show success message and reveal next steps
+      uploadedFileName.textContent = currentFileName;
+      dropZone.classList.add("hidden");
+      fileUploaded.classList.remove("hidden");
+      fileUploaded.classList.add("fade-in");
+      mappingSection.classList.remove("hidden");
+      mappingSection.classList.add("fade-in");
+      previewSection.classList.remove("hidden");
+      previewSection.classList.add("fade-in");
+      renderMappingRows();
+      renderPreview();
+      downloadBtn.disabled = false;
+      // Smooth scroll to mapping section
+      setTimeout(() => {
+        mappingSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100);
+    }
+
+    // Render mapping rows
+    function renderMappingRows() {
+      mappingRows.innerHTML = "";
+      if (rawData.length === 0) return;
+      const colCount = Math.max(...rawData.map(r => r.length));
+      EXPECTED_COLUMNS.forEach((col, index) => {
+        const row = document.createElement("div");
+        row.className = "mapping-row";
+        const labelEl = document.createElement("label");
+        labelEl.textContent = col.label;
+        row.appendChild(labelEl);
+        const selectWrapper = document.createElement("div");
+        selectWrapper.className = "custom-select";
+        const select = document.createElement("select");
+        select.dataset.field = col.id;
+        // Add "Not assigned" option
+        const notAssignedOption = document.createElement("option");
+        notAssignedOption.value = "null";
+        notAssignedOption.textContent = "Not assigned";
+        select.appendChild(notAssignedOption);
+        // Add "index" option
+        const indexOption = document.createElement("option");
+        indexOption.value = "index";
+        indexOption.textContent = "Row Index";
+        select.appendChild(indexOption);
+        // Add column options with first row preview
+        const skipRows = parseInt(skipRowsInput.value) || 0;
+        const firstDataRow = rawData[skipRows] || [];
+        for (let i = 0; i < colCount; i++) {
+          const option = document.createElement("option");
+          option.value = i;
+          const cellValue = firstDataRow[i] ? String(firstDataRow[i]).trim() : "";
+          const preview = cellValue.length > 30 ? cellValue.substring(0, 30) + '…' : cellValue;
+          option.textContent = preview ? `Column ${i + 1} (${preview})` : `Column ${i + 1}`;
+          select.appendChild(option);
+        }
+        // Set default value
+        if (currentMapping[col.id] !== undefined) {
+          select.value = currentMapping[col.id] === null ? "null" :
+                         currentMapping[col.id] === "index" ? "index" :
+                         currentMapping[col.id];
+        } else if (index < colCount) {
+          select.value = index;
+        }
+        // Update mapping on change
+        select.addEventListener("change", () => {
+          currentMapping[col.id] = select.value === "null" ? null :
+                                  select.value === "index" ? "index" :
+                                  parseInt(select.value);
+          renderPreview();
+        });
+        selectWrapper.appendChild(select);
+        row.appendChild(selectWrapper);
+        mappingRows.appendChild(row);
+      });
+    }
+
+    // Render table preview
+    function renderPreview() {
+      const skipRows = parseInt(skipRowsInput.value) || 0;
+      const data = rawData.slice(skipRows);
+
+      // Update data summary
+      const totalRows = rawData.length;
+      const processedRows = data.length;
+      dataSummary.innerHTML = `<strong>${processedRows}</strong> row${processedRows !== 1 ? 's' : ''} will be exported` +
+        (skipRows > 0 ? ` (${skipRows} row${skipRows !== 1 ? 's' : ''} skipped)` : '');
+
+      if (!data.length) {
+        previewDiv.innerHTML = "<p style='padding: 20px; text-align: center; color: var(--error);'>No data after skipping rows.</p>";
+        return;
+      }
+      const table = document.createElement("table");
+      const thead = document.createElement("thead");
+      const headerRow = document.createElement("tr");
+      // Headers
+      EXPECTED_COLUMNS.forEach(col => {
+        const th = document.createElement("th");
+        th.textContent = col.label;
+        headerRow.appendChild(th);
+      });
+      thead.appendChild(headerRow);
+      table.appendChild(thead);
+      // Data rows
+      const tbody = document.createElement("tbody");
+      // First 8 rows
+      for (let i = 0; i < Math.min(8, data.length); i++) {
+        const row = data[i];
+        const tr = document.createElement("tr");
+        EXPECTED_COLUMNS.forEach(col => {
+          const td = document.createElement("td");
+          const mapping = currentMapping[col.id];
+          if (mapping === "index") {
+            td.textContent = skipRows + i + 1;
+          } else if (mapping !== null && mapping !== undefined) {
+            td.textContent = row[mapping] !== undefined ? row[mapping] : "";
+          } else {
+            td.textContent = "";
+          }
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      }
+      // Ellipsis row (9th row)
+      if (data.length > 9) {
+        const ellipsisRow = document.createElement("tr");
+        ellipsisRow.className = "ellipsis-row";
+        for (let i = 0; i < EXPECTED_COLUMNS.length; i++) {
+          const td = document.createElement("td");
+          td.textContent = "...";
+          ellipsisRow.appendChild(td);
+        }
+        tbody.appendChild(ellipsisRow);
+      }
+      // Last row (10th row)
+      if (data.length > 9) {
+        const lastRow = data[data.length - 1];
+        const tr = document.createElement("tr");
+        EXPECTED_COLUMNS.forEach(col => {
+          const td = document.createElement("td");
+          const mapping = currentMapping[col.id];
+          if (mapping === "index") {
+            td.textContent = skipRows + data.length;
+          } else if (mapping !== null && mapping !== undefined) {
+            td.textContent = lastRow[mapping] !== undefined ? lastRow[mapping] : "";
+          } else {
+            td.textContent = "";
+          }
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      } else if (data.length === 9) {
+        const row = data[8];
+        const tr = document.createElement("tr");
+        EXPECTED_COLUMNS.forEach(col => {
+          const td = document.createElement("td");
+          const mapping = currentMapping[col.id];
+          if (mapping === "index") {
+            td.textContent = skipRows + 9;
+          } else if (mapping !== null && mapping !== undefined) {
+            td.textContent = row[mapping] !== undefined ? row[mapping] : "";
+          } else {
+            td.textContent = "";
+          }
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      } else {
+        for (let i = 8; i < data.length; i++) {
+          const row = data[i];
+          const tr = document.createElement("tr");
+          EXPECTED_COLUMNS.forEach(col => {
+            const td = document.createElement("td");
+            const mapping = currentMapping[col.id];
+            if (mapping === "index") {
+              td.textContent = skipRows + i + 1;
+            } else if (mapping !== null && mapping !== undefined) {
+              td.textContent = row[mapping] !== undefined ? row[mapping] : "";
+            } else {
+              td.textContent = "";
+            }
+            tr.appendChild(td);
+          });
+          tbody.appendChild(tr);
+        }
+      }
+      table.appendChild(tbody);
+      const wrapper = document.createElement("div");
+      wrapper.className = "table-wrapper";
+      wrapper.appendChild(table);
+      previewDiv.innerHTML = "";
+      previewDiv.appendChild(wrapper);
+    }
+
+    // Auto-refresh preview and mapping when skipRows changes
+    skipRowsInput.addEventListener("input", () => {
+      renderMappingRows();
+      renderPreview();
+    });
+
+    // Download button
+    downloadBtn.addEventListener("click", () => {
+      const skipRows = parseInt(skipRowsInput.value) || 0;
+      const data = rawData.slice(skipRows);
+      if (!data.length) {
+        alert("No data to download.");
+        return;
+      }
+      const cleaned = data.map((row, rowIndex) => {
+        const obj = {};
+        EXPECTED_COLUMNS.forEach(col => {
+          const mapping = currentMapping[col.id];
+          if (mapping === "index") {
+            obj[col.id] = skipRows + rowIndex + 1;
+          } else if (mapping !== null && mapping !== undefined) {
+            obj[col.id] = row[mapping] !== undefined ? row[mapping] : "";
+          } else {
+            obj[col.id] = "";
+          }
+        });
+        return obj;
+      });
+      const csv = Papa.unparse(cleaned);
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "gradin_students.csv";
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+  </script>
+</body>
+</html>
